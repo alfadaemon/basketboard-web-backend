@@ -17,7 +17,23 @@ tournament = Tournament.create!(
   )
 end
 
-12.times do 
+team1 = Team.first
+puts "Team 1 #{team1.name}"
+players1 = 12.times.map do 
+  player = Player.create!(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    doc_number: Faker::IDNumber.valid
+  )
+end
+
+players1.each do | player |
+  TeamPlayer.create!(player: player, team: team1)
+end
+
+team2 = Team.last
+puts "Team 2 #{team2.name}"
+players2 = 12.times.map do 
   Player.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -25,10 +41,6 @@ end
   )
 end
 
-12.times do 
-  Player.create!(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    doc_number: Faker::IDNumber.valid
-  )
+players2.each do | player |
+  TeamPlayer.create!(player: player, team: team2)
 end

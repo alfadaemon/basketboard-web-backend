@@ -7,7 +7,6 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    # TODO: remove me
     field :tournaments, [Types::TournamentType], null: false,
       description: "Returns a list of all tournaments"
     def tournaments
@@ -17,7 +16,7 @@ module Types
     field :teams, [Types::TeamType], null: false,
       description: "Returns a list of all teams"
     def teams
-      Team.all
+      Team.all.includes(team_players: [:player])
     end
 
     # Get all teams by tournament
@@ -25,7 +24,7 @@ module Types
       argument :tournament_id, ID, required: true
     end
     def teams_by_tournament(tournament_id:)
-      teams = Team.where(tournament_id: tournament_id)
+      teams = Team.where(tournament_id: tournament_id).includes(team_players: [:player])
     end
 
     # Get a specific team by id
@@ -33,7 +32,7 @@ module Types
       argument :id, ID, required: true
     end
     def team(id:)
-      Team.find(id)
+      Team.find(id).includes(team_players: [:player])
     end
 
     # Get a specific team by name
@@ -41,7 +40,7 @@ module Types
       argument :name, String, required: true
     end
     def team_by_name(name:)
-      Team.find_by(name: :name)
+      Team.find_by(name: :name).includes(team_players: [:player])
     end
 
     # Get a specific team
@@ -52,5 +51,11 @@ module Types
     #def teamByName(team_id:, tournament_id:)
     #  Player.find_by(team_id: team_id, tournament_id: tournament_id)
     #end
+
+    field :teams_players, [Types::TeamPlayerType], null: false,
+      description: "Returns a list of all teams - players relationship"
+    def teams_players
+      TeamPlayer.all.includes(:team, :player) #Use includes to avoid N+1
+    end
   end
 end
