@@ -1,4 +1,4 @@
-class Mutations::AddTeamsTournament < Mutations::BaseMutation
+class Mutations::CreateTeams < Mutations::BaseMutation
   argument :teams_names, [String], required: true
   argument :tournament_id, ID, required: true
 
@@ -18,7 +18,7 @@ class Mutations::AddTeamsTournament < Mutations::BaseMutation
     end
 
     if teams_to_save.all?(&:persisted?)
-      { teams: transaction, errors: [] }
+      { teams: teams_to_save, errors: [] }
     else
       errors = teams_to_save.map { |team| team.errors.full_messages }
       { teams: nil, errors: errors }
