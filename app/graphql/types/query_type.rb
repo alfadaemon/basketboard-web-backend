@@ -43,14 +43,24 @@ module Types
       Team.find_by(name: :name).includes(team_players: [:player])
     end
 
-    # Get a specific team
-    #field :player_by_team_tournament, Types::PlayerType, null: false do
-    #  argument :team_id, ID, required: true
-    #  argument :tournament_id, ID, required: true
-    #end
-    #def teamByName(team_id:, tournament_id:)
-    #  Player.find_by(team_id: team_id, tournament_id: tournament_id)
-    #end
+    field :players, [Types::PlayerType], null: false,
+      description: "Returns a list of all players"
+    def players
+      Player.all
+    end
+
+    field :search_player, [Types::PlayerType], null: false do
+      argument :search_term, String, required: true
+    end
+    def search_player(search_term:)
+      return [] if search_term.empty?
+
+      if search_term.scan(/\d+/).empty?
+        Player.where('first_name LIKE :search OR last_name LIKE :search', search: "%#{search_term}%")
+      else
+        Player.where('doc_number LIKE :search', search: "%#{search_term}%")
+      end
+    end
 
     field :teams_players, [Types::TeamPlayerType], null: false,
       description: "Returns a list of all teams - players relationship"
