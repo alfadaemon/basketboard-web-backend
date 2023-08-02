@@ -7,5 +7,6 @@ module Types
     field :update_tournament_name, mutation: Mutations::UpdateTournamentName
     field :add_players_to_team, mutation: Mutations::AddPlayersToTeam
     field :remove_player_from_team, mutation: Mutations::RemovePlayerFromTeam
+    field :update_player, mutation: Mutations::UpdatePlayer
   end
 end
