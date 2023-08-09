@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_213650) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_08_165348) do
+  create_table "games", force: :cascade do |t|
+    t.integer "team1_id", null: false
+    t.integer "team2_id", null: false
+    t.integer "tournament_id", null: false
+    t.date "on_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "team1_score", default: 0
+    t.integer "team2_score", default: 0
+    t.index ["team1_id"], name: "index_games_on_team1_id"
+    t.index ["team2_id"], name: "index_games_on_team2_id"
+    t.index ["tournament_id"], name: "index_games_on_tournament_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "doc_number"
     t.string "first_name"
@@ -44,6 +58,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_213650) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "games", "teams", column: "team1_id"
+  add_foreign_key "games", "teams", column: "team2_id"
+  add_foreign_key "games", "tournaments"
   add_foreign_key "team_players", "players"
   add_foreign_key "team_players", "teams"
   add_foreign_key "teams", "tournaments"
