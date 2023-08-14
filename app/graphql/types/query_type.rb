@@ -29,9 +29,14 @@ module Types
 
     field :games_by_tournament, [Types::GameType], null: false do
       argument :tournament_id, ID, required: true
+      argument :game_id, ID, required: false
     end
-    def games_by_tournament(tournament_id:)
-      Game.where(tournament_id: tournament_id).includes(:tournament)
+    def games_by_tournament(tournament_id:, game_id: nil)
+      if (game_id)
+        Game.where(tournament_id: tournament_id, id: game_id).includes(:tournament, :game_stats)
+      else
+        Game.where(tournament_id: tournament_id).includes(:tournament, :game_stats)
+      end
     end
 
     # Get a specific team by id
