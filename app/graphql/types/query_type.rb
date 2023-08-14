@@ -33,9 +33,9 @@ module Types
     end
     def games_by_tournament(tournament_id:, game_id: nil)
       if (game_id)
-        Game.where(tournament_id: tournament_id, id: game_id).includes(:tournament, :game_stats)
+        Game.where(tournament_id: tournament_id, id: game_id).includes(:tournament)#, :game_stats)
       else
-        Game.where(tournament_id: tournament_id).includes(:tournament, :game_stats)
+        Game.where(tournament_id: tournament_id).includes(:tournament)#, :game_stats)
       end
     end
 
