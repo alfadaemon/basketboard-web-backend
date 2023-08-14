@@ -3,8 +3,8 @@
 module Types
   class GameType < Types::BaseObject
     field :id, ID, null: false
-    field :local, TeamType
-    field :away, TeamType
+    field :local_team, TeamType
+    field :away_team, TeamType
     field :local_team_score, Integer, null: false
     field :away_team_score, Integer, null: false
     field :tournament, TournamentType
