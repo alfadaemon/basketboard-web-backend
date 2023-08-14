@@ -15,7 +15,7 @@ class Game < ApplicationRecord
 
   private
     def must_be_in_same_tournament
-      same_tournament = self.tournament_id == self.team1.tournament_id && self.tournament_id == self.team2.tournament_id
+      same_tournament = self.tournament_id == self.local_team.tournament_id && self.tournament_id == self.away_team.tournament_id
       errors.add(:game, "Teams not in same tournament") unless same_tournament
     end
 end
