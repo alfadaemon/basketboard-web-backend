@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_165348) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_14_170751) do
+  create_table "game_stats", force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.integer "player_id", null: false
+    t.integer "period"
+    t.integer "field_goal_attempted", default: 0
+    t.integer "field_goal_made", default: 0
+    t.integer "free_throw_attempted", default: 0
+    t.integer "free_throw_made", default: 0
+    t.integer "three_point_attempted", default: 0
+    t.integer "three_point_made", default: 0
+    t.integer "fouls", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_stats_on_game_id"
+    t.index ["player_id"], name: "index_game_stats_on_player_id"
+  end
+
   create_table "games", force: :cascade do |t|
     t.integer "team1_id", null: false
     t.integer "team2_id", null: false
@@ -58,6 +75,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_165348) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "game_stats", "games"
+  add_foreign_key "game_stats", "players"
   add_foreign_key "games", "teams", column: "team1_id"
   add_foreign_key "games", "teams", column: "team2_id"
   add_foreign_key "games", "tournaments"
