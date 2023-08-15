@@ -1,5 +1,6 @@
 module Types
   class MutationType < Types::BaseObject
+    field :delete_game_stat, mutation: Mutations::DeleteGameStat
     field :update_game_stat, mutation: Mutations::UpdateGameStat
     field :create_game, mutation: Mutations::CreateGame
     field :update_game, mutation: Mutations::UpdateGame
