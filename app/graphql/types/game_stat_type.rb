@@ -5,6 +5,7 @@ module Types
     field :id, ID, null: false
     field :game, GameType
     field :player, PlayerType
+    field :team, TeamType
     field :period, Integer, null: false
     field :field_goal_attempted, Integer, null: false
     field :field_goal_made, Integer, null: false

@@ -2,6 +2,7 @@ module Types
   class GameStatInputType < Types::BaseInputObject
     argument :game_id, ID, required: true
     argument :player_id, ID, required: true
+    argument :team_id, ID, required: true
     argument :period, Integer, required: true
     argument :field_goal_attempted, Integer, required: false
     argument :field_goal_made, Integer, required: false

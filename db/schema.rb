@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_14_170751) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_15_163002) do
   create_table "game_stats", force: :cascade do |t|
     t.integer "game_id", null: false
     t.integer "player_id", null: false
@@ -24,21 +24,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_170751) do
     t.integer "fouls", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "team_id", null: false
     t.index ["game_id"], name: "index_game_stats_on_game_id"
     t.index ["player_id"], name: "index_game_stats_on_player_id"
+    t.index ["team_id"], name: "index_game_stats_on_team_id"
   end
 
   create_table "games", force: :cascade do |t|
-    t.integer "team1_id", null: false
-    t.integer "team2_id", null: false
+    t.integer "local_team_id", null: false
+    t.integer "away_team_id", null: false
     t.integer "tournament_id", null: false
     t.date "on_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "team1_score", default: 0
-    t.integer "team2_score", default: 0
-    t.index ["team1_id"], name: "index_games_on_team1_id"
-    t.index ["team2_id"], name: "index_games_on_team2_id"
+    t.integer "local_team_score", default: 0
+    t.integer "away_team_score", default: 0
+    t.index ["away_team_id"], name: "index_games_on_away_team_id"
+    t.index ["local_team_id"], name: "index_games_on_local_team_id"
     t.index ["tournament_id"], name: "index_games_on_tournament_id"
   end
 
@@ -77,8 +79,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_170751) do
 
   add_foreign_key "game_stats", "games"
   add_foreign_key "game_stats", "players"
-  add_foreign_key "games", "teams", column: "team1_id"
-  add_foreign_key "games", "teams", column: "team2_id"
+  add_foreign_key "game_stats", "teams"
+  add_foreign_key "games", "teams", column: "away_team_id"
+  add_foreign_key "games", "teams", column: "local_team_id"
   add_foreign_key "games", "tournaments"
   add_foreign_key "team_players", "players"
   add_foreign_key "team_players", "teams"
