@@ -3,7 +3,6 @@ class GameStat < ApplicationRecord
   belongs_to :game
   belongs_to :team
 
-  #TODO: add validations for team->player and game->team before saving
   after_validation :teams_must_be_in_game, on: :create
   after_validation :player_must_be_in_team, on: :create
 
