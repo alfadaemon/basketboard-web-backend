@@ -11,5 +11,7 @@ module Types
     field :on_date, GraphQL::Types::ISO8601Date
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+
+    field :game_stats, [GameStatType]
   end
 end
