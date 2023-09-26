@@ -13,6 +13,13 @@ module Types
       Tournament.all.includes(:teams) #Use includes to avoid N+1
     end
 
+    field :tournament, Types::TournamentType, null: false do
+      argument :id, ID, required: true
+    end
+    def tournament(id:)
+      Tournament.find(id)
+    end
+
     field :teams, [Types::TeamType], null: false,
       description: "Returns a list of all teams"
     def teams
